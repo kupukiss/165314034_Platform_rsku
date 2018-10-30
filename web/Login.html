@@ -6,11 +6,13 @@ and open the template in the editor.
 -->
 <!DOCTYPE html>
 <html lang="en">
+
     <head>
         <link rel="icon" href="https://www.billionacts.org/images/areas/4/illustration-small.png">
-        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet"> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
+            body {font-family: Arial, Helvetica, sans-serif;}
             .footer {
                 position: fixed;
                 left: 0;
@@ -30,6 +32,21 @@ and open the template in the editor.
                 -webkit-background-size: cover;
                 background-size: cover;
             }
+            a {
+                font-family: 'Josefin Sans', sans-serif;
+                text-shadow: 1px 1px 0px #ededed, 4px 4px 0px rgba(0,0,0,0.15);
+                font-size: 66px;
+            }
+            input[type=text], input[type=password] {
+                width: 100%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                display: inline-block;
+                border: 1px solid #ccc;
+                box-sizing: border-box;
+            }
+
+            /* Set a style for all buttons */
             .button {
                 display: inline-block;
                 border-radius: 6px;
@@ -69,16 +86,9 @@ and open the template in the editor.
                 opacity: 1;
                 right: 0;
             }
-            a {
-                font-family: 'Josefin Sans', sans-serif;
-                text-shadow: 1px 1px 0px #ededed, 4px 4px 0px rgba(0,0,0,0.15);
-                font-size: 78px;
-            }
-            h1 {
-                text-shadow: 1px 1px 0px #ededed, 4px 4px 0px rgba(0,0,0,0.15);
-            }
+
         </style>
-        <title>RS WHO? | Antri Klinik</title>
+        <title>RS WHO? | Login</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -88,55 +98,56 @@ and open the template in the editor.
     <body style="background-image:url(https://upload.wikimedia.org/wikipedia/commons/e/e9/WHO_flag.png)">
 
         <div class="jumbotron text-center">
-            <a href="../index.html" style="text-decoration: none"><font color="white"><b>RS </b></font><font color="#63E842">WHO</font><font color="white"><b>?</b></font></a>
+            <a href="index.html" style="text-decoration: none"><font color="white"><b>RS </b></font><font color="#63E842">WHO</font><font color="white"><b>?</b></font></a>
         </div>
-
         <div class="container">
             <div class="row">
                 <div class="col-sm-4">
-                    <h1><font face="Century Gothic" color=white size="6">Form Antri Klinik</font></h1>
-                    <br>
-                    <input type="text" placeholder="NIK" id="nik" required>
-                    <button type="button" onclick="loadDoc()" id="btn"><font face="Century Gothic" size="3">OK</font></button>
-
-                    <br><br>
-                    <input type="text" placeholder="Nama" disabled id="nama" required>
-                    <input type="text" placeholder="Alamat" disabled id="alamat" required><br>
-                    <i>*otomatis berdasarkan NIK</i>
-                    <br><br>
-                    <font face="Century Gothic" color=white size="3">Tanggal Lahir :</font><br>
-                    <input type="date" id="tanggalLahir" required><br><br>
-                    <font face="Century Gothic" color=white size="3">Tanggal Berobat : </font><br>
-                    <input type="date" id="tanggalBerobat" required>
-                    <br><br>
-                    <font face="Century Gothic" color=white size="3">Klinik : </font><br>
-                    <select name="kelamin" required>
-                        <option value="Mata">Mata</option> 
-                        <option value="Saraf">Saraf</option>
-                    </select>
-                    <br><br>
-                </div>
-                <div class="col-sm-4">
-                    <br>
-                    <button class="button" id="save" type="Submit" style="vertical-align:middle"><font face="Century Gothic" size="4" ><span>SIMPAN </span></font></button>
+                    <div class="bg">
+                        <h1><font face="Century Gothic" color=#63E842 size="4"><b>Silakan login untuk masuk Pendaftaran.</b></font>
+                        </h1>
+                    </div>
                 </div>
             </div>
         </div>
+        <form action="Pendaftaran.html" id="registerForm" onsubmit="return doLogin(this);" method="POST">
+            <div class="container">
+                <div class ="form-group">
+                    <input type="text" style="width: 200px;" placeholder="masukkan email" id="email" required/>
+                </div>
+                <div class ="form-group">
+                    <input type="password" style="width: 200px;" placeholder="masukkan password" id="password" required/>
+                </div>
+                <div class="clearfix">
+                    <button class="button" id="save" type="submit" style="vertical-align:middle"><font face="Century Gothic" size="4" ><span>LOGIN </span></font></button>
+                </div><br><br>
+            </div>
+            <p id="output"></p>
+        </form>
         <p id="output"></p>
         <script>
-            function loadDoc() {
-                var url = "http://202.94.83.190:8080/rsku/webresources/pasien/cariPasien?nik=" + nik.value;
+            function doLogin(form) {
+                var Url = "http://202.94.83.190:8080/165314034_Service_rsku7/webresources/user/login?email=" + email.value +
+                        "&password=" + password.value;
                 var xhttp = new XMLHttpRequest();
-                xhttp.open("GET", url, true);
-                xhttp.send();
+
                 xhttp.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
+//                        if (this.readyState == 4 && this.status == 200) {
+                    if (form.email.value == Url && form.password.value == Url) {
                         document.getElementById("output").innerHTML = this.responseText;
-                        var myObj = JSON.parse(this.responseText);
-                        document.getElementById("nama").value = myObj.nama;
-                        document.getElementById("alamat").value = myObj.alamat;
+                        var obj = JSON.parse(this.responseText);
+                        document.getElementById("email").typemustmatch = obj.email;
+                        document.getElementById("password").typemustmatch = obj.password;
+                        alert("Anda telah berhasil login");
+                        window.open("Pendaftaran.html");/*opens the target page while Id & password matches*/
+                    } else {
+                        alert("Error Password or Username")/*displays error message*/
                     }
                 }
+//                    }
+                xhttp.open("GET", Url, true);
+                xhttp.send();
+                alert(html);
             }
         </script>
         <div class="footer">

@@ -6,9 +6,10 @@ and open the template in the editor.
 -->
 <!DOCTYPE html>
 <html lang="en">
+
     <head>
         <link rel="icon" href="https://www.billionacts.org/images/areas/4/illustration-small.png">
-        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet"> 
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
             .footer {
@@ -30,55 +31,32 @@ and open the template in the editor.
                 -webkit-background-size: cover;
                 background-size: cover;
             }
-            .button {
-                display: inline-block;
-                border-radius: 6px;
-                background-color: #1EE849;
-                border: none;
-                color: black;
-                text-align: center;
-                font-size: 28px;
-                padding: 8px;
-                width: 146px;
-                transition: all 0.5s;
-                cursor: pointer;
-            }
-            .button span {
-                cursor: pointer;
-                display: inline-block;
-                position: relative;
-                transition: 0.5s;
-            }
-            .button span:after {
-                content: '\00bb';
-                position: absolute;
-                opacity: 0;
-                top: 0;
-                right: -20px;
-                transition: 0.5s;
-            }
-            .button:hover {
-                background-color: #1EE849;
-                color: black;
-                box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
-            }
-            .button:hover span {
-                padding-right: 25px;
-            }
-            .button:hover span:after {
-                opacity: 1;
-                right: 0;
-            }
             a {
                 font-family: 'Josefin Sans', sans-serif;
                 text-shadow: 1px 1px 0px #ededed, 4px 4px 0px rgba(0,0,0,0.15);
-                font-size: 78px;
+                font-size: 66px;
             }
-            h1 {
-                text-shadow: 1px 1px 0px #ededed, 4px 4px 0px rgba(0,0,0,0.15);
+            table {
+                border-collapse: collapse;
+                width: 100%;
             }
+
+            th, td {
+                text-align: left;
+                padding: 8px;
+            }
+
+            tr {
+                background-color: #f2f2f2
+            }
+
+            th {
+                background-color: #4CAF50;
+                color: white;
+            }
+
         </style>
-        <title>RS WHO? | Daftar Klinik</title>
+        <title>RS WHO? | Klinik Kami</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -86,42 +64,37 @@ and open the template in the editor.
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
     <body style="background-image:url(https://upload.wikimedia.org/wikipedia/commons/e/e9/WHO_flag.png)">
-
         <div class="jumbotron text-center">
-            <a href="../../index.html" style="text-decoration: none"><font color="white"><b>RS </b></font><font color="#63E842">WHO</font><font color="white"><b>?</b></font></a>
+            <a href="../index.html" style="text-decoration: none"><font color="white"><b>RS </b></font><font color="#63E842">WHO</font><font color="white"><b>?</b></font></a>
         </div>
-
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-4">
-                    <h1><font face="Century Gothic" color=white size="6">Form Daftar Klinik</font></h1>
-                    <form action="" id="registerForm" onsubmit="return make_json(this)" method="POST">
-                        <br>
-                        <input type="text" placeholder="ID Klinik" id="idKlinik" required>
-                        <br><br>
-                        <input type="text" placeholder="Nama Klinik" id="nama" required>
-                        <br><br>
-                        <button class="button" id="save" type="Submit" style="vertical-align:middle"><font face="Century Gothic" size="4" ><span>SIMPAN </span></font></button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <p id="output"></p>
+        <p style="margin-left: 40%"><font face="Century Gothic" color=white size="6">Daftar Klinik Kami</font></p>
+        <p id="demo"></p>
         <script>
-            function make_json(form) {
-                var json = {
-                    "idKlinik": form.idKlinik.value,
-                    "nama": form.nama.value
-                };
-                var html = JSON.stringify(json, 0, 100);
-                var Url = "http://202.94.83.190:8080/rsku/webresources/klinik/tambahKlinik";
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', Url, false);
-                xhr.setRequestHeader("Content-type", "application/json");
-                xhr.send(html);
-                alert(html);
-                document.getElementById("output").innerHTML = html;
-                return false;
+            var url = "http://202.94.83.190:8080/165314034_Service_rsku7/webresources/klinik/getKlinik";
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    loopingList(this.responseText);
+                }
+            }
+            xmlhttp.open("GET", url, true);
+            xmlhttp.send();
+
+            function loopingList(response) {
+                var size = JSON.parse(response);
+                var i;
+                var out = "<table align='center' style='width: 60%;' border='1'> <tr><th>ID Klinik</th><th>Nama Klinik</th><th>Spesialisasi Klinik</th></tr> ";
+
+                for (i = 0; i < size.length; i++) {
+
+                    out += "<tr><td>" + size[i].idKlinik +
+                            "</td><td>" + size[i].nama +
+                            "</td><td>" + size[i].spesialis +
+                            "</td></tr>";
+                }
+                out += "</table>";
+                document.getElementById("demo").innerHTML = out;
+                ;
             }
         </script>
         <div class="footer">

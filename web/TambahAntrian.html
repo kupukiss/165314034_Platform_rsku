@@ -77,11 +77,8 @@ and open the template in the editor.
             h1 {
                 text-shadow: 1px 1px 0px #ededed, 4px 4px 0px rgba(0,0,0,0.15);
             }
-            .bg{
-                background-color: #56e5f3;
-            }
         </style>
-        <title>RS WHO? | List Klinik</title>
+        <title>RS WHO? | Tambah Antrian</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -91,53 +88,76 @@ and open the template in the editor.
     <body style="background-image:url(https://upload.wikimedia.org/wikipedia/commons/e/e9/WHO_flag.png)">
 
         <div class="jumbotron text-center">
-            <a href="index.html" style="text-decoration: none"><font color="white"><b>RS </b></font><font color="#63E842">WHO</font><font color="white"><b>?</b></font></a>
+            <a style="text-decoration: none"><font color="white"><b>RS </b></font><font color="#63E842">WHO</font><font color="white"><b>?</b></font></a>
         </div>
 
         <div class="container">
             <div class="row">
                 <div class="col-sm-4">
-                    <h1><font face="Century Gothic" color=white size="6">List Klinik</font></h1>
-                    <br>
-                    <button class="button" id="btn" type="button" onclick="loadDoc()" style="vertical-align:middle"><font face="Century Gothic" size="4" ><span>Daftar Klinik </span></font></button>
-                    <br><br>
-                    <i>*list akan otomatis tampil setelah klik "Daftar Klinik"</i>
-                    <br><br>
+                    <h1><font face="Century Gothic" color=white size="6">Form Antri Klinik</font></h1>
+                    <form action="" id="registerForm" onsubmit="return make_json(this)" method="POST">
+                        <br>
+                        <input type="text" placeholder="NIK" id="nik" required>
+                        <button type="button" onclick="loadDoc()" id="btn"><font face="Century Gothic" size="3">OK</font></button>
+                        <br><br>
+                        <i>*otomatis berdasarkan NIK akan mengisi kotak di bawah :</i>
+                        <input type="text" placeholder="Nama" disabled id="nama" required>
+                        <input type="text" placeholder="Alamat" disabled id="alamat" required><br><br>
+                        <input type="text" placeholder="No. RM" disabled id="noRm" required>
+                        <br><br>
+                        <i>*silakan isi :</i><br>
+                        <font face="Century Gothic" color=white size="3">Tanggal Rawat Jalan : </font><br>
+                        <input type="date" id="tanggal" required>
+                        <br><br>
+                        <font face="Century Gothic" color=white size="3">Klinik : </font><br>
+                        <select id="namaKlinik" required>
+                            <option value="Mata">Gigi</option> 
+                            <option value="Saraf">Anak</option>
+                            <option value="Saraf">Mata</option>
+                        </select>
+                    </form>
                 </div>
-                <br>
                 <div class="col-sm-4">
-                    <div class="bg">
-                        <font face="Century Gothic" color=black size="3"><b>&nbsp;&nbsp;id Klinik&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nama</b></font><br>
-                        <div id="list" style="margin-left: 5%"></div>
-                    </div>
+                    <br><br><br>
+                    <button class="button" id="save" type="Submit" style="vertical-align:middle"><font face="Century Gothic" size="4" ><span>SIMPAN </span></font></button>
                 </div>
             </div>
         </div>
         <p id="output"></p>
         <script>
             function loadDoc() {
-                var xmlhttp = new XMLHttpRequest();
-                var url = "http://202.94.83.190:8080/rsku/webresources/klinik/bacaKlinik";
-                xmlhttp.onreadystatechange = function () {
+                var url = "http://206.189.38.188:8080/myrs/webresources/pasien/cariPasien?nik=" + nik.value;
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("GET", url, true);
+                xhttp.send();
+                xhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
-                        myFunction(this.responseText);
+                        document.getElementById("output").innerHTML = this.responseText;
+                        var myObj = JSON.parse(this.responseText);
+                        document.getElementById("nama").value = myObj.nama;
+                        document.getElementById("alamat").value = myObj.alamat;
+                        document.getElementById("noRm").value = myObj.noRm;
                     }
                 }
-                xmlhttp.open("GET", url, true);
-                xmlhttp.send();
-                function myFunction(response) {
-                    var arr = JSON.parse(response);
-                    var i;
-                    var out = "<table>";
-                    for (i = 0; i < arr.length; i++) {
-                        out += "<tr><td>" +
-                                arr[i].idKlinik +
-                                "</td><td>" +
-                                arr[i].nama
-                    }
-                    out += "</table>";
-                    document.getElementById("list").innerHTML = out;
-                }
+            }
+            function make_json(form) {
+                var json = {
+                    "nik": form.nik.value,
+                    "noRm": form.noRm.value,
+                    "nama": form.nama.value,
+                    "alamat": form.alamat.value,
+                    "namaKlinik": form.namaKlinik.value,
+                    "tanggal": form.tanggal.value
+                };
+                var html = JSON.stringify(json, 0, 100);
+                var Url = "http://206.189.38.188:8080/myrs/webresources/antrian/tambahAntri";
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', Url, false);
+                xhr.setRequestHeader("Content-type", "application/json");
+                xhr.send(html);
+                alert(html);
+                document.getElementById("output").innerHTML = html;
+                return false;
             }
         </script>
         <div class="footer">

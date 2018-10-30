@@ -77,8 +77,11 @@ and open the template in the editor.
             h1 {
                 text-shadow: 1px 1px 0px #ededed, 4px 4px 0px rgba(0,0,0,0.15);
             }
+            .bg{
+                background-color: #56e5f3;
+            }
         </style>
-        <title>RS WHO? | Antri Klinik</title>
+        <title>RS WHO? | Cari Antrian</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -88,54 +91,52 @@ and open the template in the editor.
     <body style="background-image:url(https://upload.wikimedia.org/wikipedia/commons/e/e9/WHO_flag.png)">
 
         <div class="jumbotron text-center">
-            <a href="../index.html" style="text-decoration: none"><font color="white"><b>RS </b></font><font color="#63E842">WHO</font><font color="white"><b>?</b></font></a>
+            <a style="text-decoration: none"><font color="white"><b>RS </b></font><font color="#63E842">WHO</font><font color="white"><b>?</b></font></a>
         </div>
 
         <div class="container">
             <div class="row">
                 <div class="col-sm-4">
-                    <h1><font face="Century Gothic" color=white size="6">Form Antri Klinik</font></h1>
+                    <h1><font face="Century Gothic" color=white size="6">List Pasien</font></h1>
                     <br>
-                    <input type="text" placeholder="NIK" id="nik" required>
-                    <button type="button" onclick="loadDoc()" id="btn"><font face="Century Gothic" size="3">OK</font></button>
-
+                    <font face="Century Gothic" color=white size="3">Tanggal Rawat Jalan : </font><br>
+                    <input type="text" placeholder="yyyymmdd" id="tanggal" required><br><br>
+                    <button class="button" id="btn" type="button" onclick="loadDoc()" style="vertical-align:middle"><font face="Century Gothic" size="4" ><span>Cari Pasien </span></font></button>
                     <br><br>
-                    <input type="text" placeholder="Nama" disabled id="nama" required>
-                    <input type="text" placeholder="Alamat" disabled id="alamat" required><br>
-                    <i>*otomatis berdasarkan NIK</i>
-                    <br><br>
-                    <font face="Century Gothic" color=white size="3">Tanggal Lahir :</font><br>
-                    <input type="date" id="tanggalLahir" required><br><br>
-                    <font face="Century Gothic" color=white size="3">Tanggal Berobat : </font><br>
-                    <input type="date" id="tanggalBerobat" required>
-                    <br><br>
-                    <font face="Century Gothic" color=white size="3">Klinik : </font><br>
-                    <select name="kelamin" required>
-                        <option value="Mata">Mata</option> 
-                        <option value="Saraf">Saraf</option>
-                    </select>
+                    <i>*list akan otomatis tampil setelah mengisi tanggal lalu klik "Cari Pasien"</i>
                     <br><br>
                 </div>
+                <br>
                 <div class="col-sm-4">
-                    <br>
-                    <button class="button" id="save" type="Submit" style="vertical-align:middle"><font face="Century Gothic" size="4" ><span>SIMPAN </span></font></button>
+                    <div class="bg">
+                        <font face="Century Gothic" color=black size="3"><b>&nbsp;&nbsp;Nama Pasien</b></font><br>
+                        <div id="list" style="margin-left: 5%"></div>
+                    </div>
                 </div>
             </div>
         </div>
         <p id="output"></p>
         <script>
             function loadDoc() {
-                var url = "http://202.94.83.190:8080/rsku/webresources/pasien/cariPasien?nik=" + nik.value;
-                var xhttp = new XMLHttpRequest();
-                xhttp.open("GET", url, true);
-                xhttp.send();
-                xhttp.onreadystatechange = function () {
+                var xmlhttp = new XMLHttpRequest();
+                var url = "http://206.189.38.188:8080/myrs/webresources/antrian/cariAntri?tanggal=" + tanggal.value;
+                xmlhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
-                        document.getElementById("output").innerHTML = this.responseText;
-                        var myObj = JSON.parse(this.responseText);
-                        document.getElementById("nama").value = myObj.nama;
-                        document.getElementById("alamat").value = myObj.alamat;
+                        myFunction(this.responseText);
                     }
+                }
+                xmlhttp.open("GET", url, true);
+                xmlhttp.send();
+                function myFunction(response) {
+                    var arr = JSON.parse(response);
+                    var i;
+                    var out = "<table>";
+                    for (i = 0; i < arr.length; i++) {
+                        out += "<tr><td>" +
+                                arr[i].nama
+                    }
+                    out += "</table>";
+                    document.getElementById("list").innerHTML = out;
                 }
             }
         </script>
