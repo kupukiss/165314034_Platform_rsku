@@ -87,36 +87,40 @@ and open the template in the editor.
                 right: 0;
             }
 
-            </style>
-            <title>RS WHO?</title>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        </head>
-        <body style="background-image:url(https://upload.wikimedia.org/wikipedia/commons/e/e9/WHO_flag.png)">
+        </style>
+        <title>RS WHO?</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body style="background-image:url(https://upload.wikimedia.org/wikipedia/commons/e/e9/WHO_flag.png)">
 
-            <div class="jumbotron text-center">
-                <a href="index.html" style="text-decoration: none"><font color="white"><b>RS </b></font><font color="#63E842">WHO</font><font color="white"><b>?</b></font></a>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="bg">
-                            <h1><font face="Century Gothic" color=#63E842 size="4"><b>Rumah Sakit WHO? adalah rumah sakit yang beroperasi dibawah Organisasi Kesehatan Dunia (inggris:World Health Organization(WHO)).
-                                    Rumah Sakit WHO? memiliki beberapa klinik yang tersebar di berbagai daerah.</b></font>
-                            </h1>
-                        </div>
-                        <a href="Tentang.html"><button class="button" id="btn" type="button" style="vertical-align:middle"><font face="Century Gothic" size="4" ><span>Tentang Kami </span></font></button></a>
-                        <a href="Login.html"><button class="button" id="btn" type="button" style="vertical-align:middle"><font face="Century Gothic" size="4" ><span>Pendaftaran </span></font></button></a>
-                        <br><i>*Pendaftaran akan diarahkan ke login</i>
+        <div class="jumbotron text-center">
+            <a href="index.html" style="text-decoration: none"><font color="white"><b>RS </b></font><font color="#63E842">WHO</font><font color="white"><b>?</b></font></a>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="bg">
+                        <h1><font face="Century Gothic" color=#63E842 size="4"><b>Rumah Sakit WHO? adalah rumah sakit yang beroperasi dibawah Organisasi Kesehatan Dunia (inggris:World Health Organization(WHO)).
+                                Rumah Sakit WHO? memiliki beberapa klinik yang tersebar di berbagai daerah.</b></font>
+                        </h1>
                     </div>
+                    <a href="Tentang.html"><button class="button" id="btn" type="button" style="vertical-align:middle"><font face="Century Gothic" size="4" ><span>Tentang Kami </span></font></button></a>
+                    <a><button class="button" id="btn" type="button" onclick="myFunction()" style="vertical-align:middle"><font face="Century Gothic" size="4" ><span>Pendaftaran </span></font></button></a>
+                    <br><i>*Pendaftaran akan diarahkan ke login</i>
                 </div>
             </div>
-            
-            <div class="footer">
-                <p><font face="Century Gothic">This page is copyrighted 2018 by Bernad Bear</font></p>
-            </div>
-        </body>
-    </html>
+        </div>
+        <script>
+            function myFunction() {
+                window.open("Login.html");
+            }
+        </script>
+        <div class="footer">
+            <p><font face="Century Gothic">This page is copyrighted 2018 by Bernad Bear</font></p>
+        </div>
+    </body>
+</html>
