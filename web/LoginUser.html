@@ -56,7 +56,7 @@ and open the template in the editor.
                 text-align: center;
                 font-size: 28px;
                 padding: 8px;
-                width: 175px;
+                width: 146px;
                 transition: all 0.5s;
                 cursor: pointer;
             }
@@ -86,50 +86,9 @@ and open the template in the editor.
                 opacity: 1;
                 right: 0;
             }
-            .modal {
-                display: none; /* Hidden by default */
-                position: fixed; /* Stay in place */
-                z-index: 1; /* Sit on top */
-                left: 0;
-                top: 0;
-                width: 100%; /* Full width */
-                height: 100%; /* Full height */
-                overflow: auto; /* Enable scroll if needed */
-                background-color: rgb(0,0,0); /* Fallback color */
-                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-                padding-top: 20px;
-            }
-
-            /* Modal Content/Box */
-            .modal-content {
-                background-color: #fefefe;
-                margin: 5px auto; /* 15% from the top and centered */
-                border: 1px solid #888;
-                width: 20%; /* Could be more or less, depending on screen size */
-            }
-
-
-            /* Add Zoom Animation */
-            .animate {
-                -webkit-animation: animatezoom 0.6s;
-                animation: animatezoom 0.6s
-            }
-            .cancelbtn {
-                width: 8%;
-            }
-
-            @-webkit-keyframes animatezoom {
-                from {-webkit-transform: scale(0)} 
-                to {-webkit-transform: scale(1)}
-            }
-
-            @keyframes animatezoom {
-                from {transform: scale(0)} 
-                to {transform: scale(1)}
-            }
 
         </style>
-        <title>RS WHO?</title>
+        <title>RS WHO? | Login User</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -145,31 +104,49 @@ and open the template in the editor.
             <div class="row">
                 <div class="col-sm-4">
                     <div class="bg">
-                        <h1><font face="Century Gothic" color=#63E842 size="4"><b>Rumah Sakit WHO? adalah rumah sakit yang beroperasi dibawah Organisasi Kesehatan Dunia (inggris:World Health Organization(WHO)).
-                                Rumah Sakit WHO? memiliki beberapa klinik yang tersebar di berbagai daerah.</b></font>
+                        <h1><font face="Century Gothic" color=#63E842 size="4"><b>Silakan login untuk masuk Menu User.</b></font>
                         </h1>
                     </div>
-                    <a href="Tentang.html"><button class="button" id="btn" type="button" style="vertical-align:middle"><font face="Century Gothic" size="4" ><span>Tentang Kami </span></font></button></a>
-                    <a><button class="button" id="btn" type="button" onclick="document.getElementById('id01').style.display = 'block'" style="vertical-align:middle"><font face="Century Gothic" size="4" ><span>Login </span></font></button></a>
                 </div>
             </div>
         </div>
-        <div id="id01" class="modal">
-            <span onclick="document.getElementById('id01').style.display = 'none'">&times;</span>
-
-            <form class="modal-content animate">
-                <div class="container">
-                    &emsp;&emsp;&emsp;&emsp;&emsp;&ensp;<a href="LoginUser.html"><font face="Century Gothic" size="3" ><span>Login User </span></font></a>
-                    <br>
-                    &emsp;&emsp;&emsp;&emsp;&emsp;<a href="LoginAdmin.html"><font face="Century Gothic" size="3" ><span>Login Admin </span></font></a>
-                    <br><br>
-                    &emsp;&emsp;&emsp;&emsp;&emsp;<button type="button" onclick="document.getElementById('id01').style.display = 'none'" class="cancelbtn">Batal</button>
-                    <br><br><br>
-                </div>
-            </form>
+        <div class="container">
+            <div class ="form-group">
+                <input style="width: 200px;" type="text" placeholder="masukkan email" id="b" required/>
+            </div>
+            <div class ="form-group">
+                <input style="width: 200px;" type="password" placeholder="masukkan password" id="a" required/>
+            </div>
+            <div class="clearfix">
+                <button type="button" class="button" onclick="loadDoc()" style="vertical-align:middle"><font face="Century Gothic" size="4" ><span>LOGIN </span></font></button>
+            </div><br><br>
+            <p id="demo"></p>
         </div>
-        <div class="footer">
-            <p><font face="Century Gothic">This page is copyrighted 2018 by Bernad Bear</font></p>
+        <script>
+            function loadDoc() {
+                var email = b.value;
+                var pw = a.value;
+                var url = 'http://202.94.83.190:8080/165314034_Platform_rsku_webservice/webresources/user/login?email=' + email + '&password=' + pw;
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var user = JSON.parse(this.responseText);
+                        if (user !== null) {
+                            alert("Selamat Datang " + user.email);
+                            open("MenuUser.html");
+                        } else {
+                            alert("Login Gagal");
+                        }
+                        document.getElementById("demo").innerHTML =
+                                this.responseText;
+                    }
+                };
+                xhttp.open("GET", url, true);
+                xhttp.send();
+            }
+        </script>
+        <div class = "footer">
+            <p> <font face = "Century Gothic" > This page is copyrighted 2018 by Bernad Bear </font></p>
         </div>
     </body>
 </html>
