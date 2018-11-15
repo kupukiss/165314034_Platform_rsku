@@ -87,7 +87,7 @@ and open the template in the editor.
                 function loopingList(response) {
                     var size = JSON.parse(response);
                     var i;
-                    var out = "<table align='center' style='width: 60%;' border='1'> <tr><th>ID Dokter</th><th>Nama Dokter</th><th>Spesialisasi Dokter</th></tr>";
+                    var out = "<table align='center' style='width: 60%;' border='1'> <tr><th>ID Pasien</th><th>Tanggal</th><th>No RM</th><th>Nama Pasien</th><th>Alamat</th><th>Nama Klinik</th></tr>";
 
                     for (i = 0; i < size.length; i++) {
                         out += "<tr><td>" + size[i].id +
