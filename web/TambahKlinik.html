@@ -78,7 +78,7 @@ and open the template in the editor.
                 text-shadow: 1px 1px 0px #ededed, 4px 4px 0px rgba(0,0,0,0.15);
             }
         </style>
-        <title>RS WHO? | Pendaftaran Klinik</title>
+        <title>RS WHO? | Tambah Klinik</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -101,6 +101,8 @@ and open the template in the editor.
                         <br><br>
                         <input type="text" placeholder="Nama Klinik" id="nama" required>
                         <br><br>
+                        <input type="text" placeholder="Spesialis" id="spesialis" required>
+                        <br><br>
                         <button class="button" id="save" type="Submit" style="vertical-align:middle"><font face="Century Gothic" size="4" ><span>SIMPAN </span></font></button>
                     </form>
                 </div>
@@ -111,10 +113,11 @@ and open the template in the editor.
             function make_json(form) {
                 var json = {
                     "idKlinik": form.idKlinik.value,
-                    "nama": form.nama.value
+                    "nama": form.nama.value,
+                    "spesialis": form.spesialis.value
                 };
                 var html = JSON.stringify(json, 0, 100);
-                var Url = "http://202.94.83.190:8080/165314034_Platform_rsku_webservice/webresources/klinik/tambahKlinik";
+                var Url = "http://202.94.83.190:8080/165314034_Platform_rsku_webservice/webresources/klinik/addKlinik";
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', Url, false);
                 xhr.setRequestHeader("Content-type", "application/json");
